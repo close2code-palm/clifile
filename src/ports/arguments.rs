@@ -11,6 +11,8 @@ pub struct ArgsConfig {
     pub root: String,
     #[arg(short, long)]
     pub to: String,
-    #[arg(short, long)]
-    pub show: bool
+    #[arg(short, long, default_value_t = true)]
+    pub show: bool,
+    #[arg(long, default_value_t = false)]
+    pub rm: bool
 }

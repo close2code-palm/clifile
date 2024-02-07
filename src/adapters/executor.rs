@@ -29,8 +29,20 @@ impl ManagementStrategy for ViewStrategy {
     }
 }
 
+impl ManagementStrategy for DeleteStrategy {
+    fn execute(&self, de: &DirEntry) -> io::Result<()> {
+        return if de.path().is_dir() {
+            fs::remove_dir(de.path())
+        } else {
+            fs::remove_file(de.path())
+        }
+    }
+}
+
 pub struct CopyStrategy<'a> {
     pub destination: &'a Path
 }
 
 pub struct ViewStrategy;
+
+pub struct  DeleteStrategy;

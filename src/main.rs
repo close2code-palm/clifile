@@ -5,7 +5,7 @@ mod adapters;
 use std::path::Path;
 use clap::Parser;
 use adapters::executor::CopyStrategy;
-use crate::adapters::executor::ViewStrategy;
+use crate::adapters::executor::{DeleteStrategy, ViewStrategy};
 use crate::manager::{FileExecutor, make_pattern};
 use crate::ports::arguments::ArgsConfig;
 
@@ -20,11 +20,16 @@ fn main() {
     if args.show {
         let strategy = ViewStrategy{};
         let manager = FileExecutor {root_dir_path: root_path, regex: &regex, strategy: &strategy};
-        manager.act().expect("Viewing failed.")
+        manager.act().expect("Viewing failed.");
     }
     if args.copy {
         let strategy: CopyStrategy = CopyStrategy{destination: copy_to};
         let manager = FileExecutor { root_dir_path: root_path, regex: &regex, strategy: &strategy};
         manager.act().expect("Copying failed.");
+    }
+    if args.rm {
+        let strategy = DeleteStrategy;
+        let manager = FileExecutor { root_dir_path: root_path, regex: &regex, strategy: &strategy };
+        manager.act().expect("Removal failed.")
     }
 }
