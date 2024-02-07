@@ -17,15 +17,14 @@ fn main() {
     println!("{}", regex.as_str());
     let root_path = Path::new(&args.root);
     let copy_to = Path::new(&args.to);
-    let read = regex.clone();
     if args.show {
         let strategy = ViewStrategy{};
-        let manager = FileExecutor {root_dir_path: root_path, regex:read, strategy: &strategy};
+        let manager = FileExecutor {root_dir_path: root_path, regex: &regex, strategy: &strategy};
         manager.act().expect("Viewing failed.")
     }
     if args.copy {
         let strategy: CopyStrategy = CopyStrategy{destination: copy_to};
-        let manager = FileExecutor { root_dir_path: root_path, regex, strategy: &strategy};
+        let manager = FileExecutor { root_dir_path: root_path, regex: &regex, strategy: &strategy};
         manager.act().expect("Copying failed.");
     }
 }

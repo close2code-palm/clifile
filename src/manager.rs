@@ -18,7 +18,7 @@ pub trait ManagementStrategy {
 
 pub struct FileExecutor<'a> {
     pub root_dir_path: &'a Path,
-    pub regex: Regex,
+    pub regex: &'a Regex,
     pub strategy: &'a dyn ManagementStrategy
 }
 
