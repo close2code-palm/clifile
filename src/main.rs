@@ -2,6 +2,7 @@ mod manager;
 mod ports;
 mod adapters;
 
+use std::arch::asm;
 use std::path::Path;
 use clap::Parser;
 use adapters::executor::CopyStrategy;
@@ -13,7 +14,6 @@ use crate::ports::arguments::ArgsConfig;
 fn main() {
     let args = ArgsConfig::parse();
     let regex = make_pattern(args.patterns);
-    println!("{}", regex.as_str());
     let root_path = Path::new(&args.root);
     let copy_to = Path::new(&args.to);
     check_contains(root_path, copy_to);
