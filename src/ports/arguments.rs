@@ -5,10 +5,12 @@ pub use clap::Parser;
 pub struct ArgsConfig {
     #[arg(short, long, value_parser, num_args = 1.., value_delimiter = ' ')]
     pub patterns: Vec<String>,
-    #[arg(short, long, default_value_t = true)]
+    #[arg(short, long, default_value_t = false)]
     pub copy: bool,
     #[arg(short, long)]
     pub root: String,
     #[arg(short, long)]
-    pub to: String
+    pub to: String,
+    #[arg(short, long)]
+    pub show: bool
 }

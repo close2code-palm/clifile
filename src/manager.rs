@@ -1,5 +1,5 @@
 use std::fs::{DirEntry, read_dir};
-use std::{io};
+use std::io;
 use std::path::Path;
 use regex::Regex;
 
@@ -13,10 +13,6 @@ pub fn make_pattern(vec: Vec<String>) -> Regex {
 pub trait ManagementStrategy {
     // fn new<'c>(destination: &'c Path) -> Self where Self: Sized;
     fn execute(&self, de:&DirEntry) -> io::Result<()>;
-}
-
-pub struct CopyStrategy<'a> {
-    pub destination: &'a Path
 }
 
 

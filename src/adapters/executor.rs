@@ -1,6 +1,7 @@
 use std::{fs, io};
 use std::fs::DirEntry;
-use crate::manager::{CopyStrategy, ManagementStrategy};
+use std::path::Path;
+use crate::manager::ManagementStrategy;
 
 
 impl ManagementStrategy for CopyStrategy<'_> {
@@ -20,3 +21,16 @@ impl ManagementStrategy for CopyStrategy<'_> {
         }
     }
 }
+
+impl ManagementStrategy for ViewStrategy {
+    fn execute(&self, de: &DirEntry) -> io::Result<()> {
+        println!("{}", de.path().to_str().unwrap());
+        Ok(())
+    }
+}
+
+pub struct CopyStrategy<'a> {
+    pub destination: &'a Path
+}
+
+pub struct ViewStrategy;
