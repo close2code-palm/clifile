@@ -1,12 +1,34 @@
 use std::fs::{DirEntry, read_dir};
-use std::io;
-use std::path::Path;
+use std::{fs, io};
+use std::path::{Path};
 use regex::Regex;
 
 
 
 pub fn make_pattern(vec: Vec<String>) -> Regex {
     Regex::new(&*vec.join("|")).unwrap()
+}
+
+pub fn check_contains(root: &Path, mut target: &Path) {
+    // todo normalize paths
+    loop {
+        if *target.as_os_str() == *root.as_os_str() {
+            panic!("Target directory cannot be inner!")
+        }
+        match target.parent() {
+            None => { break }
+            Some(path) => {
+                target = path;
+            }
+        }
+    }
+}
+
+pub fn ensure_target(target: &Path) {
+    if target.is_dir() {
+        return;
+    }
+    _ = fs::create_dir(target);
 }
 
 
@@ -32,12 +54,6 @@ impl FileExecutor<'_> {
             for entry in read_dir(dep).unwrap() {
                 let entry: DirEntry = entry?;
                 self.look_for_files(&entry)?;
-                // let path = entry.path();
-                // return if path.is_dir() {
-                //     self.look_for_files(de)
-                // } else {
-                //     self.strategy.execute(de)
-                // }
             }
         }
         Ok(())
