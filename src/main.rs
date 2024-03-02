@@ -2,7 +2,6 @@ mod manager;
 mod ports;
 mod adapters;
 
-use std::arch::asm;
 use std::path::Path;
 use clap::Parser;
 use adapters::executor::CopyStrategy;
